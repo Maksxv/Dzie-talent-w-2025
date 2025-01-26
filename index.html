@@ -54,13 +54,13 @@
 <body>
 
     <div class="container">
-        <h2>Zgłoszenie uczestnika na Dzień talentów 2025</h2>
+        <h2>Zgłoszenie uczestnika</h2>
         
         <!-- Formularz zgłoszeniowy -->
-        <div id="participant-form" class="hidden">
+        <div id="participant-form">
             <input type="text" id="firstName" placeholder="Imię" required>
             <input type="text" id="lastName" placeholder="Nazwisko" required>
- 		<input type="text" id="firstName" placeholder="Klasa" required>
+            <input type="text" id="class" placeholder="Klasa" required>
             <button onclick="submitParticipant()">Zgłoś</button>
         </div>
 
@@ -112,6 +112,7 @@
                 const row = tableBody.insertRow();
                 row.insertCell(0).textContent = participant.firstName;
                 row.insertCell(1).textContent = participant.lastName;
+                row.insertCell(2).textContent = participant.class;  // Wyświetlanie klasy
             });
         }
 
@@ -119,15 +120,17 @@
         function submitParticipant() {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
+            const className = document.getElementById('class').value;  // Pobieranie wartości klasy
             
-            if (firstName && lastName) {
-                const newParticipant = { firstName, lastName };
+            if (firstName && lastName && className) {
+                const newParticipant = { firstName, lastName, class: className };  // Dodanie klasy do obiektu uczestnika
                 participants.push(newParticipant);
                 localStorage.setItem('participants', JSON.stringify(participants));
                 alert('Zgłoszenie przyjęte!');
                 loadParticipants();
                 document.getElementById('firstName').value = '';
                 document.getElementById('lastName').value = '';
+                document.getElementById('class').value = '';  // Czyszczenie pola klasy
             } else {
                 alert('Proszę uzupełnić wszystkie dane!');
             }
